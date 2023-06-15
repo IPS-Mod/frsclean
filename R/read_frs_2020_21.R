@@ -1,4 +1,4 @@
-#' Read Family Resources Survey 2020
+#' Read Family Resources Survey 2020/2021
 #'
 #' Read in the Family Resources Survey data for the 2020-21 fiscal year, including the
 #' two years prior if there is a need for a larger sample size
@@ -15,8 +15,8 @@
 #' \dontrun{
 #'
 #' }
-read_frs_2020 <- function(root = "C:/",
-                          file = "Users/damon/OneDrive/Documents/Datasets/Family Resources Survey/tab") {
+read_frs_2020_21 <- function(root = "C:/",
+                             file = "Users/damon/OneDrive/Documents/Datasets/Family Resources Survey/tab") {
 
   cat(crayon::yellow("\tReading Family Resources Survey 2020/2021:\n"))
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/frsclean.R
 \name{frsclean}
 \alias{frsclean}
-\title{Read, Clean, Combine Family Resources Survey data}
+\title{Read, Clean, and Combine Family Resources Survey data}
 \usage{
 frsclean(
   root,

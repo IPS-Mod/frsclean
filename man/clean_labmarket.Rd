@@ -13,9 +13,6 @@ clean_labmarket(data, job_data, income_data)
 
 \item{income_data}{Data table. The income data cleaned by the `clean_income` function.}
 }
-\value{
-
-}
 \description{
 Generate clean variables for labour market information from the raw
 Family Resources Survey data sets that are needed for the microsimulation model.

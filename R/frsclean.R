@@ -1,4 +1,4 @@
-#' Read, Clean, Combine Family Resources Survey data
+#' Read, Clean, and Combine Family Resources Survey data
 #'
 #' A wrapper function for applying all of the reading and cleaning functions for the
 #' Family Resources Survey (FRS) end user licence data, selecting the
@@ -36,7 +36,7 @@ frsclean <- function(root,
 
   if (2020 %in% years){
 
-    wave <- frs_clean_global(read_frs_2020(root = root, file = file),
+    wave <- frs_clean_global(read_frs_2020_21(root = root, file = file),
                              ages = ages, keep_vars = keep_vars, complete_vars = complete_vars)
 
     wave[, year := 2020]
