@@ -12,7 +12,7 @@ Description: Reads in raw data from the Family Resources Survey (FRS)
     obtained under the End User License from the UK Data Service 
     and applies functions to clean and merge separate datasets and combine
     waves of data. 
-License: What license is it under?
+License: AGPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
