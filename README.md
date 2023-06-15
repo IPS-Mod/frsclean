@@ -67,16 +67,6 @@ data <- frsclean(root = root,
 The **output** of these functions are a single data table of processed
 FRS data
 
-### Projects
-
-Some examples of projects making use of the `frsclean` package are:
-
-1.  [Input-Output
-    modelling](https://gitlab.com/SPECTRUM_Sheffield/projects/input-output-modelling).
-    Here the package is used to create full-time equivalent employment
-    by sector and year to estimate the impacts of changing demand in
-    different sectors on total employment.
-
 ## Installation
 
 `frsclean` is available on GitHub. If you are on a Windows machine you
