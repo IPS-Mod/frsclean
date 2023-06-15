@@ -7,14 +7,21 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Family Resources Survey - Data Cleaning ![Labour Force Survey Data Wrangling](man/figures/hex-frsclean.png)
+# Family Resources Survey Data Cleaning <img src="hex-frsclean.png" align="right" style="padding-left:10px;background-color:white;" width="100" height="100" />
 
 <!-- badges: start -->
 
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![](https://img.shields.io/badge/doi-10.17605/OSF.IO/GNSEJ-green.svg)](https://doi.org/10.17605/OSF.IO/GNSEJ)
 <!-- badges: end -->
+
+## Citation
+
+Morris, D. (2023). frsclean: An R package for cleaning the Family
+Resources Survey data. R package version \[x.x.x\]. University of
+Sheffield. doi: <https://doi.org/10.17605/OSF.IO/GNSEJ>
 
 ## Motivation
 
