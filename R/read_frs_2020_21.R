@@ -6,7 +6,7 @@
 #' @param root Character. The root directory
 #' @param file Character. The file path and name
 #'
-#' @return
+#' @return Data table
 #' @export
 #'
 #' @examples

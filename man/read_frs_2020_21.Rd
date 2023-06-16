@@ -14,6 +14,9 @@ read_frs_2020_21(
 
 \item{file}{Character. The file path and name}
 }
+\value{
+Data table
+}
 \description{
 Read in the Family Resources Survey data for the 2020-21 fiscal year, including the
 two years prior if there is a need for a larger sample size

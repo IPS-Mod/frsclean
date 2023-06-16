@@ -11,6 +11,9 @@ clean_benefits(data, benefits_data)
 
 \item{benefits_data}{Data table. The raw FRS benefits file.}
 }
+\value{
+Data table
+}
 \description{
 Generate clean variables for individual market income (excluding benefit income) and taxes from the raw
 Family Resources Survey data sets that are needed for the microsimulation model.

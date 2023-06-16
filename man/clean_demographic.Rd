@@ -11,6 +11,9 @@ clean_demographic(data, main_data)
 
 \item{main_data}{Data table. The main data file "frsxxyy"}
 }
+\value{
+Data table
+}
 \description{
 Generate clean variables for individual demographics and generate identifiers from the raw
 Family Resources Survey data sets that are needed for the microsimulation model.

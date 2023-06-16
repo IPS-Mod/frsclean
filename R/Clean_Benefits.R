@@ -6,7 +6,7 @@
 #' @param data Data table. The combined adult, child, and household raw FRS data files.
 #' @param benefits_data Data table. The raw FRS benefits file.
 #'
-#' @return
+#' @return Data table
 #' @export
 #'
 #' @examples

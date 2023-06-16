@@ -10,7 +10,7 @@
 #' @param accounts_data Data table. the raw FRS accounts file.
 #' @param benefits_data Data table. The raw FRS benefits file.
 #'
-#' @return
+#' @return Data table
 #' @export
 #'
 #' @examples

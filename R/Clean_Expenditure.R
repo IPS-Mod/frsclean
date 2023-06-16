@@ -7,7 +7,7 @@
 #' @param maint_data Data table. The raw FRS maintenance data file.
 #' @param penprov_data Data table. The raw FRS pension provision data file.
 #'
-#' @return
+#' @return Data table
 #' @export
 #'
 #' @examples

@@ -10,7 +10,7 @@
 #' @param job_data Data table. The raw FRS job file.
 #' @param income_data Data table. The income data cleaned by the `clean_income` function.
 #'
-#' @return
+#' @return Data table
 #' @export
 #'
 #' @examples

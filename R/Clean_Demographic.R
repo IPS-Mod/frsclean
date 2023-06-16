@@ -6,7 +6,7 @@
 #' @param data Data table. The combined adult, child, and household raw FRS data files.
 #' @param main_data  Data table. The main data file "frsxxyy"
 #'
-#' @return
+#' @return Data table
 #' @export
 #'
 #' @examples
