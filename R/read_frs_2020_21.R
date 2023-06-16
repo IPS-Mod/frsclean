@@ -14,9 +14,10 @@
 #'
 #' \dontrun{
 #'
+#'
 #' }
-read_frs_2020_21 <- function(root = "C:/",
-                             file = "Users/damon/OneDrive/Documents/Datasets/Family Resources Survey/tab") {
+read_frs_2020_21 <- function(root = "X:/",
+                             file = "HAR_PR/PR/IPS_beyond_SMI_NIHR202996/General/R/data-family-resources-survey/data/raw") {
 
   cat(crayon::yellow("\tReading Family Resources Survey 2020/2021:\n"))
 
@@ -50,7 +51,7 @@ read_frs_2020_21 <- function(root = "C:/",
   )
   data.table::setnames(adult, names(adult), tolower(names(adult)))
 
-  adult_vars <- Hmisc::Cs(sernum, benunit, person, hrpid, age80, sex, marital, empstatb, fted, typeed2,
+  adult_vars <- Hmisc::Cs(sernum, benunit, person, hrpid, age80, sex, marital, empstatb, fted, empstati, typeed2,
                           allpay1, allpay2, allpay3, allpay4, allow1, allow2, allow3, allow4,
                           royal2, royal3, royal4, royyr1, royyr2, royyr3, royyr4, cvpay,
                           tea, tea9697, dvhiqual, sic, ftwk, ptwk, soc2010, lkwork, lktrain, nindinc,
@@ -76,7 +77,8 @@ read_frs_2020_21 <- function(root = "C:/",
   data.table::setnames(child, names(child), tolower(names(child)))
 
   child_vars <- Hmisc::Cs(sernum, benunit, person, age, sex, fted, chincdv, chamtern, chamttst,
-                          r01, r02, r03, r04, r05, r06, r07, r08, r09, r10, r11, r12, r13, r14)
+                          r01, r02, r03, r04, r05, r06, r07, r08, r09, r10, r11, r12, r13, r14,
+                          chealth1, chcond1)
 
   child <- child[ , child_vars, with=F]
 
