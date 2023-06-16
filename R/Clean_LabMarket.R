@@ -25,36 +25,30 @@ clean_labmarket <- function(data,
 
   clean_data <- copy(data)
   clean_job_data <- copy(job_data)
-  lab_income <- copy(income_data[, c("sernum", "benunit", "person", "y_empl", "y_semp")])
+  lab_income <- copy(income_data[, c("sernum", "benunit", "person", "yem", "yse")])
 
   ######################
   #### Clean variables
 
   #### Economic status
 
-  clean_data[adult == 0, lm_status := 6]
-  clean_data[(fted == 2 | fted == -1) & age <5 , lm_status := 0]
-  clean_data[empstatb == 1, lm_status := 2]
-  clean_data[empstatb %in% c(2,3,4,5,6,8), lm_status := 3]
-  clean_data[empstatb == 9, lm_status := 4]
-  clean_data[empstatb == 7, lm_status := 5]
-  clean_data[empstatb == 13, lm_status := 6]
-  clean_data[empstatb == 10, lm_status := 7]
-  clean_data[empstatb %in% c(11,12), lm_status := 8]
-  clean_data[empstatb == 14, lm_status := 9]
+  clean_data[adult == 0, les := 6]
+  clean_data[(fted == 2 | fted == -1) & age <5 , les := 0]
+  clean_data[empstatb == 1, les := 2]
+  clean_data[empstatb %in% c(2,3,4,5,6,8), les := 3]
+  clean_data[empstatb == 9, les := 4]
+  clean_data[empstatb == 7, les := 5]
+  clean_data[empstatb == 13, les := 6]
+  clean_data[empstatb == 10, les := 7]
+  clean_data[empstatb %in% c(11,12), les := 8]
+  clean_data[empstatb == 14, les := 9]
 
-  clean_data[is.na(lm_status), lm_status := 6]
-
-  clean_data[, lm_status := factor(lm_status,
-                                   levels = c(0,2:9),
-                                   labels = c("pre_school","self_employed", "employed",
-                                              "pensioner", "unemployed", "student",
-                                              "inactive", "sick_disabled", "family_worker"))]
+  clean_data[is.na(les), les := 6]
 
   #### Civil service
 
-  clean_data[sic == 84, lm_civserv := ifelse(sic == 84, 1, 0)]
-  clean_data[is.na(lm_civserv), lm_civserv := 0]
+  clean_data[sic == 84, lcs := ifelse(sic == 84, 1, 0)]
+  clean_data[is.na(lcs), lcs := 0]
 
   ### firm size
 
@@ -68,98 +62,98 @@ clean_labmarket <- function(data,
   clean_job_data[numemp %in% 5:8, numempl := 2]
   clean_job_data[numemp == 9, numempl := 3]
 
-  clean_job_data[, lm_firmsize := 0]
-  clean_job_data[!(is.na(emplany)) & emplany > 0 , lm_firmsize := empany]
-  clean_job_data[!(is.na(numempl)) & numempl > 0 & lm_firmsize == 0, lm_firmsize := numempl]
+  clean_job_data[, lfs := 0]
+  clean_job_data[!(is.na(emplany)) & emplany > 0 , lfs := empany]
+  clean_job_data[!(is.na(numempl)) & numempl > 0 & lfs == 0, lfs := numempl]
 
-  clean_job_data[lm_firmsize == 1, lm_firmsize := 12]
-  clean_job_data[lm_firmsize == 2, lm_firmsize := 262]
-  clean_job_data[lm_firmsize == 3, lm_firmsize := 500]
+  clean_job_data[lfs == 1, lfs := 12]
+  clean_job_data[lfs == 2, lfs := 262]
+  clean_job_data[lfs == 3, lfs := 500]
 
   clean_data <- merge(clean_data, clean_job_data, by = c("sernum","benunit","person"), all.x = TRUE)
 
-  clean_data[is.na(lm_firmsize), lm_firmsize := 0]
+  clean_data[is.na(lfs), lfs := 0]
 
   ### work history (time in months)
 
   clean_data[ptwk < 0 | is.na(ptwk), ptwk := 0]
   clean_data[ftwk < 0 | is.na(ftwk), ftwk := 0]
 
-  clean_data[, lm_wrkhist := ptwk + ftwk]
-  clean_data[adult == 0, lm_wrkhist := 0]
-  clean_data[, lm_wrkhist := lm_wrkhist*12]
+  clean_data[, liwwh := ptwk + ftwk]
+  clean_data[adult == 0, liwwh := 0]
+  clean_data[, liwwh := liwwh*12]
 
   ### occupation (soc2010)
 
-  clean_data[, lm_occ := -1]
-  clean_data[!(is.na(soc2010)) & soc2010 != -1, lm_occ := soc2010/1000]
-  clean_data[lm_occ == 0, lm_occ := -1]
+  clean_data[, loc := -1]
+  clean_data[!(is.na(soc2010)) & soc2010 != -1, loc := soc2010/1000]
+  clean_data[lm_occ == 0, loc := -1]
 
   ### looking for work
 
-  clean_data[empstatb == 7 & (lktrain == 1 | lkwork == 1), lm_jobseek := 1]
-  clean_data[is.na(lm_jobseek), lm_jobseek := 0]
+  clean_data[empstatb == 7 & (lktrain == 1 | lkwork == 1), lowas := 1]
+  clean_data[is.na(lowas), lowas := 0]
 
   ### hours
 
   clean_data <- merge(clean_data, lab_income, by = c("sernum","benunit","person"), all.x = TRUE)
 
         ### employed working hours
-  clean_data[everot == 2 & inearns > 0, lm_hours_empl := totus1]
-  clean_data[everot == 1 & inearns > 0, lm_hours_empl := usuhr + pothr]
-  clean_data[y_empl > 0 & lm_hours_empl > 0, temp := y_empl/lm_hours_empl] ## impute hours if reported earnings by 0 hours
-  clean_data[y_empl > 0 & lm_hours_empl == 0, lm_hours_empl := y_empl/mean(temp)]
-  clean_data[lm_hours_empl > 0 & lm_hours_empl < 1, lm_hours_empl := 1] ## if less than 1 hour, set equal to 1
-  clean_data[, lm_hours_empl := as.integer(lm_hours_empl)]
-  clean_data[lm_status != "employed", lm_hours_empl := 0]
+  clean_data[everot == 2 & inearns > 0, lhw00 := totus1]
+  clean_data[everot == 1 & inearns > 0, lhw00 := usuhr + pothr]
+  clean_data[yem > 0 & lm_hours_empl > 0, temp := yem/lhw00] ## impute hours if reported earnings by 0 hours
+  clean_data[yem > 0 & lm_hours_empl == 0, lhw00 := yem/mean(temp)]
+  clean_data[lm_hours_empl > 0 & lhw00 < 1, lhw00 := 1] ## if less than 1 hour, set equal to 1
+  clean_data[, lhw00 := as.integer(lhw00)]
+  clean_data[lm_status != "employed", lhw00 := 0]
 
         ### self-employed working hours
-  clean_data[everot == 2, lm_hours_semp := totus1]
-  clean_data[everot == 1, lm_hours_semp := usuhr + pothr]
-  clean_data[y_semp > 0 & lm_hours_semp > 0, temp := y_semp/lm_hours_semp] ## impute hours if reported earnings by 0 hours
-  clean_data[y_semp > 0 & lm_hours_semp == 0, lm_hours_semp := y_semp/mean(temp)]
-  clean_data[, lm_hours_semp := as.integer(lm_hours_semp)]
-  clean_data[lm_status != "self_employed", lm_hours_semp := 0]
+  clean_data[everot == 2, lhw01 := totus1]
+  clean_data[everot == 1, lhw01 := usuhr + pothr]
+  clean_data[yse > 0 & lhw01 > 0, temp := yse/lhw01] ## impute hours if reported earnings by 0 hours
+  clean_data[yse > 0 & lhw01 == 0, lhw01 := yse/mean(temp)]
+  clean_data[, lhw01 := as.integer(lhw01)]
+  clean_data[lm_status != "self_employed", lhw01 := 0]
 
        ### total hours
-  clean_data[, lm_hours := lm_hours_empl + lm_hours_semp]
+  clean_data[, lhw := lhw00 + lhw01]
 
-  clean_data[is.na(lm_hours), lm_hours := 0]
-  clean_data[is.na(lm_hours_semp), lm_hours_semp := 0]
-  clean_data[is.na(lm_hours_empl), lm_hours_empl := 0]
+  clean_data[is.na(lhw), lhw := 0]
+  clean_data[is.na(lhw01), lhw01 := 0]
+  clean_data[is.na(lhw00), lhw00 := 0]
 
   ### industry
-  clean_data[, lm_ind := -1]
-  clean_data[sic >= 1 & sic <= 3, lm_ind := 1]
-  clean_data[sic >= 5 & sic <= 9, lm_ind := 2]
-  clean_data[sic >= 10 & sic <= 33, lm_ind := 3]
-  clean_data[sic == 35, lm_ind := 4]
-  clean_data[sic >= 36 & sic <= 39, lm_ind := 5]
-  clean_data[sic >= 41 & sic <= 43, lm_ind := 6]
-  clean_data[sic >= 45 & sic <= 47, lm_ind := 7]
-  clean_data[sic >= 49 & sic <= 53, lm_ind := 8]
-  clean_data[sic >= 55 & sic <= 56, lm_ind := 9]
-  clean_data[sic >= 58 & sic <= 63, lm_ind := 10]
-  clean_data[sic >= 64 & sic <= 66, lm_ind := 11]
-  clean_data[sic == 68, lm_ind := 12]
-  clean_data[sic >= 69 & sic <= 75, lm_ind := 13]
-  clean_data[sic >= 77 & sic <= 82, lm_ind := 14]
-  clean_data[sic == 84, lm_ind := 15]
-  clean_data[sic == 85, lm_ind := 16]
-  clean_data[sic >= 86 & sic <= 88, lm_ind := 17]
-  clean_data[sic >= 90 & sic <= 93, lm_ind := 18]
-  clean_data[sic >= 94 & sic <= 96, lm_ind := 19]
-  clean_data[sic >= 97 & sic <= 98, lm_ind := 20]
-  clean_data[sic >= 99 & !is.na(sic), lm_ind := 21]
+  clean_data[, lindi := -1]
+  clean_data[sic >= 1 & sic <= 3, lindi := 1]
+  clean_data[sic >= 5 & sic <= 9, lindi := 2]
+  clean_data[sic >= 10 & sic <= 33, lindi := 3]
+  clean_data[sic == 35, lindi := 4]
+  clean_data[sic >= 36 & sic <= 39, lindi := 5]
+  clean_data[sic >= 41 & sic <= 43, lindi := 6]
+  clean_data[sic >= 45 & sic <= 47, lindi := 7]
+  clean_data[sic >= 49 & sic <= 53, lindi := 8]
+  clean_data[sic >= 55 & sic <= 56, lindi := 9]
+  clean_data[sic >= 58 & sic <= 63, lindi := 10]
+  clean_data[sic >= 64 & sic <= 66, lindi := 11]
+  clean_data[sic == 68, lindi := 12]
+  clean_data[sic >= 69 & sic <= 75, lindi := 13]
+  clean_data[sic >= 77 & sic <= 82, lindi := 14]
+  clean_data[sic == 84, lindi := 15]
+  clean_data[sic == 85, lindi := 16]
+  clean_data[sic >= 86 & sic <= 88, lindi := 17]
+  clean_data[sic >= 90 & sic <= 93, lindi := 18]
+  clean_data[sic >= 94 & sic <= 96, lindi := 19]
+  clean_data[sic >= 97 & sic <= 98, lindi := 20]
+  clean_data[sic >= 99 & !is.na(sic), lindi := 21]
 
 
   ######################
   #### Retain variables
 
   clean_data <- clean_data[, c("sernum", "benunit", "person",
-                               "lm_status", "lm_civserv", "lm_firmsize",
-                               "lm_wrkhist", "lm_occ", "lm_jobseek",
-                               "lm_hours", "lm_hours_empl", "lm_hours_semp", "lm_ind")]
+                               "les", "lcs", "lfs",
+                               "liwwh", "loc", "lowas",
+                               "lhw", "lhw00", "lhw01", "lindi")]
 
 
   return(clean_data)
