@@ -18,7 +18,7 @@ Data table
 }
 \description{
 Generate clean variables for labour market information from the raw
-Family Resources Survey data sets that are needed for the microsimulation model.
+Family Resources Survey data sets.
 }
 \details{
 Note that this function requires data generated from the `clean_income` function using the

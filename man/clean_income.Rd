@@ -31,7 +31,7 @@ Data table
 }
 \description{
 Generate clean variables for individual market income (excluding benefit income) and taxes from the raw
-Family Resources Survey data sets that are needed for the microsimulation model.
+Family Resources Survey data sets.
 }
 \examples{
 

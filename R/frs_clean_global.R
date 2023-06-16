@@ -53,11 +53,20 @@ frs_clean_global <- function(data_list,
                                              job_data = data_list$job_data,
                                              income_data = income_data)
 
+  ### assets
+
+  cat(crayon::yellow("\n\tCleaning Asset Variables\n"))
+
+  asset_data <- frsclean::clean_assets(data = data_list$data,
+                                       main_data = data_list$main_data,
+                                       benunit_data = data_list$benunit_data)
+
   #########################
   ### Retain variables
 
   final_data <- merge(demographics, income_data, by = c("sernum","benunit","person"))
   final_data <- merge(final_data,   labour_market, by = c("sernum","benunit","person"))
+  final_data <- merge(final_data,   asset_data, by = c("sernum","benunit","person"))
   final_data <- merge(final_data,   exp_data, by = c("sernum","benunit","person"))
 
   final_data[, c("sernum","benunit","person") := NULL]

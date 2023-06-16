@@ -1,7 +1,7 @@
 #' Clean Demographic data
 #'
 #' Generate clean variables for individual demographics and generate identifiers from the raw
-#' Family Resources Survey data sets that are needed for the microsimulation model.
+#' Family Resources Survey data sets.
 #'
 #' @param data Data table. The combined adult, child, and household raw FRS data files.
 #' @param main_data  Data table. The main data file "frsxxyy"

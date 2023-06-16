@@ -36,7 +36,8 @@ read_frs_2020_21 <- function(root = "X:/",
   data.table::setnames(main, names(main), tolower(names(main)))
 
   main_vars <- Hmisc::Cs(sernum, benunit, intdate,
-                         subrent, tentyp2)
+                         subrent, tentyp2,
+                         ptentyp2, tenure, landlord, accjob)
 
   main_data <- main[ , main_vars, with=F]
 
@@ -102,7 +103,7 @@ read_frs_2020_21 <- function(root = "X:/",
   hhold_vars <- Hmisc::Cs(sernum, gross4, gvtregno, bedroom6, ptentyp2,
                           hhrent, tenure, tentyp2, subrent, mortint,
                           cwatamtd, csewamt, watsewrt,
-                          gbhscost, nihscost)
+                          gbhscost, nihscost, bedroom6)
 
   hhold <- hhold[ , hhold_vars, with=F]
 
@@ -110,6 +111,23 @@ read_frs_2020_21 <- function(root = "X:/",
 
   #######################################################################
   ##### Other data to process separately and aggregate before merging
+
+  ##############
+  ### benefit unit data
+
+  cat(crayon::green("\tBenefit unit\n"))
+
+  benunit_data <- data.table::fread(
+    paste0(root, file, "/2020/benunit.tab"), showProgress = FALSE,
+    na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
+  )
+  data.table::setnames(benunit_data, names(benunit_data), tolower(names(benunit_data)))
+
+
+  benunit_vars <- Hmisc::Cs(sernum, benunit,
+                            totcapb3)
+
+  benunit_data <- benunit_data[ , benunit_vars, with=F]
 
   ##############
   ### pension data
@@ -235,6 +253,7 @@ read_frs_2020_21 <- function(root = "X:/",
 
   return(list(data = data,
               main_data = main_data,
+              benunit_data = benunit_data,
               pension_data = pension_data,
               penprov_data = penprov_data,
               maint_data = maint_data,

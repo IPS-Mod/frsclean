@@ -18,7 +18,7 @@ Data table
 }
 \description{
 Generate clean variables for individual expenditures from the raw
-Family Resources Survey data sets that are needed for the microsimulation model.
+Family Resources Survey data sets.
 }
 \examples{
 

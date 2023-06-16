@@ -1,7 +1,7 @@
 #' Clean Income and Tax data
 #'
 #' Generate clean variables for individual market income (excluding benefit income) and taxes from the raw
-#' Family Resources Survey data sets that are needed for the microsimulation model.
+#' Family Resources Survey data sets.
 #'
 #' @param data Data table. The combined adult, child, and household raw FRS data files.
 #' @param pension_data Data table. The raw FRS pension data file.

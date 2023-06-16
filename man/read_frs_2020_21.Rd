@@ -5,8 +5,9 @@
 \title{Read Family Resources Survey 2020/2021}
 \usage{
 read_frs_2020_21(
-  root = "C:/",
-  file = "Users/damon/OneDrive/Documents/Datasets/Family Resources Survey/tab"
+  root = "X:/",
+  file =
+    "HAR_PR/PR/IPS_beyond_SMI_NIHR202996/General/R/data-family-resources-survey/data/raw"
 )
 }
 \arguments{
@@ -25,6 +26,7 @@ two years prior if there is a need for a larger sample size
 
 
 \dontrun{
+
 
 }
 }
