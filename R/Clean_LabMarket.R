@@ -87,7 +87,7 @@ clean_labmarket <- function(data,
 
   clean_data[, loc := -1]
   clean_data[!(is.na(soc2010)) & soc2010 != -1, loc := soc2010/1000]
-  clean_data[lm_occ == 0, loc := -1]
+  clean_data[loc == 0, loc := -1]
 
   ### looking for work
 
@@ -101,11 +101,11 @@ clean_labmarket <- function(data,
         ### employed working hours
   clean_data[everot == 2 & inearns > 0, lhw00 := totus1]
   clean_data[everot == 1 & inearns > 0, lhw00 := usuhr + pothr]
-  clean_data[yem > 0 & lm_hours_empl > 0, temp := yem/lhw00] ## impute hours if reported earnings by 0 hours
-  clean_data[yem > 0 & lm_hours_empl == 0, lhw00 := yem/mean(temp)]
-  clean_data[lm_hours_empl > 0 & lhw00 < 1, lhw00 := 1] ## if less than 1 hour, set equal to 1
+  clean_data[yem > 0 & lhw00 > 0, temp := yem/lhw00] ## impute hours if reported earnings by 0 hours
+  clean_data[yem > 0 & lhw00 == 0, lhw00 := yem/mean(temp)]
+  clean_data[lhw00 > 0 & lhw00 < 1, lhw00 := 1] ## if less than 1 hour, set equal to 1
   clean_data[, lhw00 := as.integer(lhw00)]
-  clean_data[lm_status != "employed", lhw00 := 0]
+  #clean_data[lm_status != "employed", lhw00 := 0]
 
         ### self-employed working hours
   clean_data[everot == 2, lhw01 := totus1]
@@ -113,7 +113,7 @@ clean_labmarket <- function(data,
   clean_data[yse > 0 & lhw01 > 0, temp := yse/lhw01] ## impute hours if reported earnings by 0 hours
   clean_data[yse > 0 & lhw01 == 0, lhw01 := yse/mean(temp)]
   clean_data[, lhw01 := as.integer(lhw01)]
-  clean_data[lm_status != "self_employed", lhw01 := 0]
+  #clean_data[lm_status != "self_employed", lhw01 := 0]
 
        ### total hours
   clean_data[, lhw := lhw00 + lhw01]

@@ -74,7 +74,7 @@ clean_demographic <- function(data,
 
   ### marital status
 
-  clean_data[, d_marstat := 0]
+  clean_data[, dms := 0]
   clean_data[marital == 2 | marital == 3, dms := 1]
   clean_data[marital == 1, dms := 2]
   clean_data[marital == 5, dms := 3]
@@ -85,7 +85,7 @@ clean_demographic <- function(data,
 
   clean_data[, ddi := 0]
   clean_data[adult == 1 & empstati == 9, ddi := 1]
-  clean_data[adult == 0 & chealth == 1 & chcond == 1, ddi := 1]
+  clean_data[adult == 0 & chealth1 == 1 & chcond == 1, ddi := 1]
 
   #####################
   #### education
@@ -94,16 +94,16 @@ clean_demographic <- function(data,
 
   clean_data[fted %in% c(-1,2,NA), dec := 0]
   clean_data[typeed2 == 1, dec := 1]
-  clean_data[((typeed2 == 2 | typeed2 == 4)|((typeed2 == 3 | typeed2 ==8 ) & d_age < 11) |
-             (is.na(typeed2) & fted == 1 & d_age < 11)), dec := 2]
+  clean_data[((typeed2 == 2 | typeed2 == 4)|((typeed2 == 3 | typeed2 ==8 ) & dag < 11) |
+             (is.na(typeed2) & fted == 1 & dag < 11)), dec := 2]
   clean_data[((typeed2 == 5 | typeed2 == 6) |
-             ((typeed2 == 3 | typeed2 == 8) & d_age >=11 & d_age <= 16) |
-             (is.na(typeed2) & fted == 1 & d_age >=11 & d_age <=16)), dec := 3]
-  clean_data[(typeed2 == 7 | ((typeed2==3|typeed2==8) & d_age >16) |
-             (is.na(typeed2) & fted == 1 & d_age > 16)), dec := 4]
-  clean_data[((typeed2 == 7 | typeed2 == 8) & d_age >= 19), dec := 5]
+             ((typeed2 == 3 | typeed2 == 8) & dag >=11 & dag <= 16) |
+             (is.na(typeed2) & fted == 1 & dag >=11 & dag <=16)), dec := 3]
+  clean_data[(typeed2 == 7 | ((typeed2==3|typeed2==8) & dag >16) |
+             (is.na(typeed2) & fted == 1 & dag > 16)), dec := 4]
+  clean_data[((typeed2 == 7 | typeed2 == 8) & dag >= 19), dec := 5]
   clean_data[typeed2 == 9 |
-             (is.na(typeed2) & fted == 1 & d_age >= 19), dec := 6]
+             (is.na(typeed2) & fted == 1 & dag >= 19), dec := 6]
 
         ### Highest education status
         ### children
@@ -111,7 +111,7 @@ clean_demographic <- function(data,
         ### adults not in education (age completed fte, highest qual achieved if missing)
 
   clean_data[dec > 1 & adult == 0, deh := dec - 2]
-  clean_data[(dec < 2 | is.na(dec)) & adult == 0, d_eduhigh := 0 ]
+  clean_data[(dec < 2 | is.na(dec)) & adult == 0, deh := 0 ]
 
   clean_data[dec > 1 & adult == 1, deh := dec - 2]
   clean_data[dec == 6 & adult == 1, deh := 3] ## lower secondary -> tertiary
@@ -133,7 +133,7 @@ clean_demographic <- function(data,
         clean_data[dag %in% 50:59, age_gr := 5]
         clean_data[dag %in% 60:99, age_gr := 6]
 
-        clean_data[, med_eduhigh := median(d_eduhigh, na.rm = TRUE), by = "age_gr"]
+        clean_data[, med_eduhigh := median(deh, na.rm = TRUE), by = "age_gr"]
 
         clean_data[is.na(deh), deh := med_eduhigh]
 
@@ -142,7 +142,7 @@ clean_demographic <- function(data,
         ### then impute based on highest qualification received
 
   clean_data[deh == 0, dew := -1]
-  clean_data[d_educur == 0 & deh != 0, tea2 := tea]
+  clean_data[dec == 0 & deh != 0, tea2 := tea]
 
   clean_data[deh == 1, tea2 := ifelse(dag < 10, dag, 10)]
   clean_data[deh == 2, tea2 := ifelse(dag < 16, dag, 16)]

@@ -22,7 +22,7 @@ clean_assets <- function(data,
 
   clean_data <- copy(data[order(sernum, person)])
 
-  clean_main_data <- copy(main_data[, c("sernum","benunit","ptentyp2","tenure","landlord","accjob")])
+  clean_main_data <- copy(main_data[, c("sernum","benunit","landlord","accjob")])
 
   clean_data <- merge(clean_data, clean_main_data, by = c("sernum","benunit"), all.x = T)
 
@@ -40,13 +40,17 @@ clean_assets <- function(data,
   clean_data[tenure == 5, amrtn := 6]
   clean_data[tenure == 6, amrtn := 7]
   clean_data[(landlord %in% 3:6 | accjob == 1) & amrtn == 0, amrtn := 4]
-  clean_data[amrts == 0, amrtn := 3]
+  clean_data[amrtn == 0, amrtn := 3]
 
   ## Financial capital
   benunit_data[, afc := totcapb3]
 
   clean_data <- merge(clean_data, benunit_data, by = c("sernum", "benunit"), all.x = TRUE)
   clean_data[is.na(afc), afc := 0]
+
+  ## council tax band
+  clean_data[, amriv00 := ctband]
+  clean_data[is.na(ctband), amriv00 := -1]
 
   ############################
   #### Retain variables ######

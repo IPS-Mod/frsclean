@@ -15,7 +15,6 @@ frs_clean_global <- function(data_list,
                              keep_vars = NULL,
                              complete_vars = NULL
 ) {
-
   #################################################
   ## RUN THE CLEANING MODULES AND COMBINE DATA ####
 
@@ -36,6 +35,14 @@ frs_clean_global <- function(data_list,
                                          oddjob_data = data_list$oddjob_data,
                                          accounts_data = data_list$accounts_data,
                                          benefits_data = data_list$benefits_data)
+
+  ### benefits
+
+  cat(crayon::yellow("\n\tCleaning Benefits Variables\n"))
+
+  ben_data <-   frsclean::clean_benefits(data = data_list$data,
+                                         benefits_data = data_list$benefits_data,
+                                         benunit_data = data_list$benunit_data)
 
   ### expenditure data cleaning
 
@@ -65,13 +72,14 @@ frs_clean_global <- function(data_list,
   ### Retain variables
 
   final_data <- merge(demographics, income_data, by = c("sernum","benunit","person"))
+  final_data <- merge(final_data,   ben_data, by = c("sernum","benunit","person"))
   final_data <- merge(final_data,   labour_market, by = c("sernum","benunit","person"))
   final_data <- merge(final_data,   asset_data, by = c("sernum","benunit","person"))
   final_data <- merge(final_data,   exp_data, by = c("sernum","benunit","person"))
 
   final_data[, c("sernum","benunit","person") := NULL]
 
-  cat(crayon::yellow("\tdone\n"))
+  cat(crayon::green("\t\ndone\n\n"))
 
   ##################################################
   ## COMBINE DATASETS ##############################

@@ -19,7 +19,7 @@
 read_frs_2020_21 <- function(root = "X:/",
                              file = "HAR_PR/PR/IPS_beyond_SMI_NIHR202996/General/R/data-family-resources-survey/data/raw") {
 
-  cat(crayon::yellow("\tReading Family Resources Survey 2020/2021:\n"))
+  cat(crayon::yellow("\tReading Family Resources Survey 2020/2021:\n\n"))
 
   ###################################
   ####### Read in the data ##########
@@ -37,7 +37,7 @@ read_frs_2020_21 <- function(root = "X:/",
 
   main_vars <- Hmisc::Cs(sernum, benunit, intdate,
                          subrent, tentyp2,
-                         ptentyp2, tenure, landlord, accjob)
+                         ptentyp2, tenure, landlord, accjob, hbenamt)
 
   main_data <- main[ , main_vars, with=F]
 
@@ -79,7 +79,7 @@ read_frs_2020_21 <- function(root = "X:/",
 
   child_vars <- Hmisc::Cs(sernum, benunit, person, age, sex, fted, chincdv, chamtern, chamttst,
                           r01, r02, r03, r04, r05, r06, r07, r08, r09, r10, r11, r12, r13, r14,
-                          chealth1, chcond1)
+                          chealth1, chcond)
 
   child <- child[ , child_vars, with=F]
 
@@ -103,7 +103,9 @@ read_frs_2020_21 <- function(root = "X:/",
   hhold_vars <- Hmisc::Cs(sernum, gross4, gvtregno, bedroom6, ptentyp2,
                           hhrent, tenure, tentyp2, subrent, mortint,
                           cwatamtd, csewamt, watsewrt,
-                          gbhscost, nihscost, bedroom6)
+                          gbhscost, nihscost, ctband,
+                          chrgamt1, chrgamt3, chrgamt4, chrgamt5,
+                          chrgamt6, chrgamt7, chrgamt8, chrgamt9)
 
   hhold <- hhold[ , hhold_vars, with=F]
 
@@ -125,7 +127,7 @@ read_frs_2020_21 <- function(root = "X:/",
 
 
   benunit_vars <- Hmisc::Cs(sernum, benunit,
-                            totcapb3)
+                            totcapb3, hbothamt, hbothbu)
 
   benunit_data <- benunit_data[ , benunit_vars, with=F]
 
@@ -243,8 +245,8 @@ read_frs_2020_21 <- function(root = "X:/",
   data.table::setnames(benefits_data, names(benefits_data), tolower(names(benefits_data)))
 
 
-  benefits_vars <- Hmisc::Cs(sernum, person,
-                             benefit, benamt, pres)
+  benefits_vars <- Hmisc::Cs(sernum, benunit, person,
+                             benefit, benamt, pres, var1, var2, var3)
 
   benefits_data <- benefits_data[ , benefits_vars, with=F]
 

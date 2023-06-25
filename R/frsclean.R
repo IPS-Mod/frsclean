@@ -15,14 +15,14 @@
 #' @return Returns a new set of variables
 #' @export
 
-frsclean <- function(root,
-                     file,
+frsclean <- function(root = "X:/",
+                     file = "HAR_PR/PR/IPS_beyond_SMI_NIHR202996/General/R/data-family-resources-survey/data/raw",
                      years = 2020,
                      ages = NULL,
                      keep_vars = NULL,
                      complete_vars = NULL){
 
-  cat(crayon::bgGreen("Cleaning the Family Resources Survey Data\n"))
+  cat(crayon::green("\n\nCleaning the Family Resources Survey Data\n\n"))
 
   start_time <- Sys.time()
 
@@ -36,8 +36,8 @@ frsclean <- function(root,
 
   if (2020 %in% years){
 
-    wave <- frs_clean_global(read_frs_2020_21(root = root, file = file),
-                             ages = ages, keep_vars = keep_vars, complete_vars = complete_vars)
+    data <- read_frs_2020_21(root = root, file = file)
+    wave <- frs_clean_global(data, ages = ages, keep_vars = keep_vars, complete_vars = complete_vars)
 
     wave[, year := 2020]
     wave[, fiscal_year := "2020/2021"]
@@ -60,7 +60,7 @@ frsclean <- function(root,
 
   time <- paste0("Total Data reading and cleaning time: ", round(tdiff,2), " minutes")
 
-  cat(crayon::bgGreen(time))
+  cat(crayon::yellow(time))
 
   return(data)
 }

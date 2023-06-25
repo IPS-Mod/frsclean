@@ -5,8 +5,9 @@
 \title{Read, Clean, and Combine Family Resources Survey data}
 \usage{
 frsclean(
-  root,
-  file,
+  root = "X:/",
+  file =
+    "HAR_PR/PR/IPS_beyond_SMI_NIHR202996/General/R/data-family-resources-survey/data/raw",
   years = 2020,
   ages = NULL,
   keep_vars = NULL,

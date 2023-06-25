@@ -69,6 +69,7 @@ clean_income <- function(data,
   clean_data[is.na(yse), yse := 0]
   clean_data[is.na(yseny), yseny := 0]
 
+  ###########################
   ## Investment income
 
   ## investment (not taxable)
@@ -89,14 +90,28 @@ clean_income <- function(data,
 
     accounts_data[, yiytx := yiytx*(52/12)]
 
+  ## interest (taxable)
+    accounts_data[, yittx := 0]
+    accounts_data[!(account %in% 7:8), yittx := yiytx]
+
+  ## dividend (taxable)
+    accounts_data[, ydvtx := 0]
+    accounts_data[account %in% 7:8, ydvtx := yiytx]
+
     accounts_data <- accounts_data[, .(yiynt = sum(yiynt, na.rm = TRUE),
-                                       yiytx  = sum(yiytx, na.rm = TRUE)), by = c("sernum", "person")]
+                                       yiytx = sum(yiytx, na.rm = TRUE),
+                                       yittx = sum(yittx, na.rm = TRUE),
+                                       ydvtx = sum(ydvtx, na.rm = TRUE)), by = c("sernum", "person")]
 
   clean_data <- merge(clean_data, accounts_data, by = c("sernum", "person"), all.x = TRUE)
   clean_data[is.na(yiynt), yiynt := 0]
   clean_data[is.na(yiytx), yiytx := 0]
+  clean_data[is.na(yittx), yittx := 0]
+  clean_data[is.na(ydvtx), ydvtx := 0]
+
   clean_data[, yiy := yiytx + yiynt]
 
+  #########################
   ## Property income
 
       ## income from rent (non-taxable)
@@ -105,8 +120,9 @@ clean_income <- function(data,
   clean_data[cvpay < 0 | is.na(cvpay), cvpay := 0]
   clean_data[, cvpayhh := max(cvpay), by = c("sernum")]
   clean_data[, y_prop_in := y_prop_in + cvpayhh*(52/12)] ## from boarders/lodgers net of housing benefit
-  clean_data[hrpid != 1, y_prop_in := 0] ## set to zero if not person responsibel for hhold costs
+  clean_data[hrpid != 1, y_prop_in := 0] ## set to zero if not person responsible for hhold costs
   clean_data[y_prop_in*12 <= 7500, yprnt := y_prop_in]
+  clean_data[is.na(yprnt), yprnt := 0]
 
       ## income from rent (taxable)
   clean_data[, y_prop_out := 0]
@@ -115,6 +131,7 @@ clean_income <- function(data,
   clean_data[, yprtx := 0]
   clean_data[, yprtx := yprtx + y_prop_out]
   clean_data[y_prop_in*12 > 7500, yprtx := yprtx + y_prop_in]
+  clean_data[is.na(yprtx), yprtx := 0]
 
   clean_data[, ypr := yprtx + yprnt]
 
@@ -138,7 +155,9 @@ clean_income <- function(data,
   clean_data[allow3 == 1, yptot := yptot + allpay3*(52/12)]
   clean_data[allow4 == 1, yptot := yptot + allpay4*(52/12)]
   clean_data[allow1 == 1, yptot := yptot + allpay1*(52/12)]
+  clean_data[is.na(yptot), yptot := 0]
 
+  ################
   ## Other income
       oddjob_data[, y_odd := 0]
       oddjob_data[ojnow == 1, y_odd := ojamt*(52/12)]
@@ -156,6 +175,7 @@ clean_income <- function(data,
   clean_data[royal4 == 1, yot01 := yot01 + royyr4*(52/12)]
   clean_data[chamttst > 0 & !(is.na(chamttst)), yot01 := yot01 + (chamttst*52/12)]
 
+  ###########################
   ## Disposable income
   clean_data[is.na(nindinc) | nindinc %in% -9:-1, nindinc := 0]
   clean_data[adult == 1, yds := as.numeric(nindinc)]
@@ -166,7 +186,7 @@ clean_income <- function(data,
   #### Retain variables ######
 
   inc_vars <- Hmisc::Cs(sernum, benunit, person,
-                        yem, ypp, yse, yseny, yiynt, yiyntx, yiy,
+                        yem, ypp, yse, yseny, yiynt, yiytx, yittx, ydvtx, yiy,
                         ypr, yprtx, yprnt, yptmp, yptot, yot01, yds)
 
 

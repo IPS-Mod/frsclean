@@ -52,6 +52,19 @@ clean_expenditure <- function(data,
   clean_data[, xhcot := xhcot*(52/12)]
   clean_data[hrpid != 1, xhcot := 0]
 
+  ## Housing costs (compulsory service charges)
+  clean_data[, xhcsc := 0]
+  clean_data[chrgamt1 != -1 & !is.na(chrgamt1), xhcsc := xhcsc + chrgamt1]
+  clean_data[chrgamt3 != -1 & !is.na(chrgamt3), xhcsc := xhcsc + chrgamt3]
+  clean_data[chrgamt4 != -1 & !is.na(chrgamt4), xhcsc := xhcsc + chrgamt4]
+  clean_data[chrgamt5 != -1 & !is.na(chrgamt5), xhcsc := xhcsc + chrgamt5]
+  clean_data[chrgamt6 != -1 & !is.na(chrgamt6), xhcsc := xhcsc + chrgamt6]
+  clean_data[chrgamt7 != -1 & !is.na(chrgamt7), xhcsc := xhcsc + chrgamt7]
+  clean_data[chrgamt8 != -1 & !is.na(chrgamt8), xhcsc := xhcsc + chrgamt8]
+  clean_data[chrgamt9 != -1 & !is.na(chrgamt9), xhcsc := xhcsc + chrgamt9]
+  clean_data[, xhcsc := xhcsc * (52/12)]
+  clean_data[hrpid != 1, xhcsc := 0]
+
   ## Total housing costs
   clean_data[, xhc := 0]
   clean_data[gvtregno != 13 & gbhscost != -1, xhc := gbhscost] ## GB

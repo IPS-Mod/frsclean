@@ -4,12 +4,14 @@
 \alias{clean_benefits}
 \title{Clean Income and Tax data}
 \usage{
-clean_benefits(data, benefits_data)
+clean_benefits(data, benefits_data, benunit_data)
 }
 \arguments{
 \item{data}{Data table. The combined adult, child, and household raw FRS data files.}
 
 \item{benefits_data}{Data table. The raw FRS benefits file.}
+
+\item{benunit_data}{Data table. The raw FRS benefit unit file.}
 }
 \value{
 Data table
