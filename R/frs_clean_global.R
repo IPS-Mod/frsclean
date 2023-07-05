@@ -68,6 +68,12 @@ frs_clean_global <- function(data_list,
                                        main_data = data_list$main_data,
                                        benunit_data = data_list$benunit_data)
 
+  ### health
+
+  cat(crayon::yellow("\n\tCleaning Health Variables\n"))
+
+  health_data <- frsclean::clean_health(data = data_list$data)
+
   #########################
   ### Retain variables
 
@@ -76,6 +82,7 @@ frs_clean_global <- function(data_list,
   final_data <- merge(final_data,   labour_market, by = c("sernum","benunit","person"))
   final_data <- merge(final_data,   asset_data, by = c("sernum","benunit","person"))
   final_data <- merge(final_data,   exp_data, by = c("sernum","benunit","person"))
+  final_data <- merge(final_data,   health_data, by = c("sernum","benunit","person"))
 
   final_data[, c("sernum","benunit","person") := NULL]
 

@@ -58,6 +58,7 @@ read_frs_2020_21 <- function(root = "X:/",
                           tea, tea9697, dvhiqual, sic, ftwk, ptwk, soc2010, lkwork, lktrain, nindinc,
                           mntamt1, mntamt2, mntusam1, mntusam2, mntus1, mntus2, apamt, apdamt, pareamt,
                           r01, r02, r03, r04, r05, r06, r07, r08, r09, r10, r11, r12, r13, r14,
+                          disd01, disd02, disd03, disd04, disd05, disd06, disd07, disd08, disd09, disd10,
                           inearns, seincam2)
 
   adult <- adult[ , adult_vars, with=F]
@@ -79,6 +80,7 @@ read_frs_2020_21 <- function(root = "X:/",
 
   child_vars <- Hmisc::Cs(sernum, benunit, person, age, sex, fted, chincdv, chamtern, chamttst,
                           r01, r02, r03, r04, r05, r06, r07, r08, r09, r10, r11, r12, r13, r14,
+                          cdisd01, cdisd02, cdisd03, cdisd04, cdisd05, cdisd06, cdisd07, cdisd08, cdisd09, cdisd10,
                           chealth1, chcond)
 
   child <- child[ , child_vars, with=F]
