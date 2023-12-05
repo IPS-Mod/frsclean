@@ -136,11 +136,14 @@ clean_income <- function(data,
   clean_data[, ypr := yprtx + yprnt]
 
       ## Maintenance income (private transfers)
+  suppressWarnings( ## suppress a warning in 2021/22 data that figure is truncated to integer. This is fine.
   clean_data[mntus1 == 2 & mntusam1 > 0 & !is.na(mntusam1), mntamt1 := mntusam1]
+  )
   clean_data[mntamt1 < 0 | is.na(mntamt1), mntamt1 := 0]
   clean_data[mntus2 == 2 & mntusam2 > 0 & !is.na(mntusam2), mntamt2 := mntusam2]
   clean_data[mntamt2 < 0 | is.na(mntamt2), mntamt2 := 0]
   clean_data[, yptmp := (mntamt1 + mntamt2)*(52/12)]
+
 
   ## Private transfers (other than maintenance)
       benefits_data <- benefits_data[benefit %in% 31:35 & pres == 1,]

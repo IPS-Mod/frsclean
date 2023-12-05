@@ -9,6 +9,7 @@
 #' @param data Data table. The combined adult, child, and household raw FRS data files.
 #' @param job_data Data table. The raw FRS job file.
 #' @param income_data Data table. The income data cleaned by the `clean_income` function.
+#' @param year Numeric integer - year corresponding to the start of the financial year i.e. 2020/21 data is indexed as 2020
 #'
 #' @return Data table
 #' @export
@@ -21,7 +22,8 @@
 #' }
 clean_labmarket <- function(data,
                             job_data,
-                            income_data){
+                            income_data,
+                            year){
 
   clean_data <- copy(data)
   clean_job_data <- copy(job_data)
@@ -83,11 +85,19 @@ clean_labmarket <- function(data,
   clean_data[adult == 0, liwwh := 0]
   clean_data[, liwwh := liwwh*12]
 
-  ### occupation (soc2010)
+  ### occupation (soc2010 up to 2020/21, soc2020 after)
 
+  if (year <= 2020) {
   clean_data[, loc := -1]
   clean_data[!(is.na(soc2010)) & soc2010 != -1, loc := soc2010/1000]
   clean_data[loc == 0, loc := -1]
+
+  } else if (year > 2020){
+  clean_data[, loc := -1]
+  clean_data[!(is.na(soc2020)) & soc2020 != -1, loc := soc2020/1000]
+  clean_data[loc == 0, loc := -1]
+
+  }
 
   ### looking for work
 

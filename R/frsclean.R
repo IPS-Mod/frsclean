@@ -37,10 +37,23 @@ frsclean <- function(root = "X:/",
   if (2020 %in% years){
 
     data <- read_frs_2020_21(root = root, file = file)
-    wave <- frs_clean_global(data, ages = ages, keep_vars = keep_vars, complete_vars = complete_vars)
+    wave <- frs_clean_global(data, ages = ages, keep_vars = keep_vars, complete_vars = complete_vars, year = 2020)
 
     wave[, year := 2020]
     wave[, fiscal_year := "2020/2021"]
+
+    data_list <- append(data_list, list(wave)) ; rm(wave)
+  }
+
+  ### 2021/2022 tax year (April 2021 - March 2022)
+
+  if (2021 %in% years){
+
+    data <- read_frs_2021_22(root = root, file = file)
+    wave <- frs_clean_global(data, ages = ages, keep_vars = keep_vars, complete_vars = complete_vars, year = 2021)
+
+    wave[, year := 2021]
+    wave[, fiscal_year := "2021/2022"]
 
     data_list <- append(data_list, list(wave)) ; rm(wave)
   }

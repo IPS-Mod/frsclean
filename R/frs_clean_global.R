@@ -8,12 +8,14 @@
 #' @param keep_vars Character vector - the names of the variables to keep (defaults to NULL - retaining all variables).
 #' @param complete_vars Character vector - the names of the variables on which the selection of complete cases will be based.
 #' If NULL (default) no complete-case filtering is applied.
+#' @param year Numeric integer - year corresponding to the start of the financial year i.e. 2020/21 data is indexed as 2020
 #' @return Returns a new set of variables
 #' @export
 frs_clean_global <- function(data_list,
                              ages = NULL,
                              keep_vars = NULL,
-                             complete_vars = NULL
+                             complete_vars = NULL,
+                             year = NULL
 ) {
   #################################################
   ## RUN THE CLEANING MODULES AND COMBINE DATA ####
@@ -58,7 +60,8 @@ frs_clean_global <- function(data_list,
 
   labour_market <- frsclean::clean_labmarket(data = data_list$data,
                                              job_data = data_list$job_data,
-                                             income_data = income_data)
+                                             income_data = income_data,
+                                             year = year)
 
   ### assets
 
