@@ -37,7 +37,6 @@ Inflation_Adjust <- function(data,
   data[, yem := yem * inf_index]
   data[, ypp := ypp * inf_index]
   data[, yse := yse * inf_index]
-  data[, yseny := yseny * inf_index]
   data[, yiynt := yiynt * inf_index]
   data[, yiytx := yiytx * inf_index]
   data[, yittx := yittx * inf_index]
