@@ -22,6 +22,94 @@ library(frsclean)
 
 This document details the cleaned variables derived from the Family Resources Survey (FRS) data using `frsclean` package.
 
+## Identifier and personal variables 
+
+- **ddt**. Date of interview
+
+- **idperson**. Individual ID
+
+- **idhh**. Household ID
+
+- **idmother**. Mother ID
+
+- **idfather**. Father ID
+
+- **idorighh**. FRS original household identifier 
+
+- **idorigperson**. FRS original person identifier
+
+- **idpartner**. Partner ID
+
+- **year**. Numeric integer variable identifying the year 
+
+- **fiscal_year**. Character variable identifying the fiscal year
+
+- **dag**. Age 
+
+- **dct**. Country code (fixed at 15 - UK. Variable used to identifier countries in EUROMOD)
+
+- **dcz**. Citizenship (equal to 1 for everyone by assumption as underlying variable is missing in all cases)
+
+- **ddi**. Disability status. 0: Not disabled, 1: Disabled
+
+- **dec**. Current education status:
+
+  - 0: Not in education
+  - 1: Pre-primary
+  - 2: Primary
+  - 3: Lower secondary
+  - 4: Upper secondary
+  - 5: Post secondary
+  - 6: Tertiary
+  
+- **deh**. Education highest status achieved:
+  
+  - 0: Not completed primary
+  - 1: Primary
+  - 2: Lower secondary
+  - 3: Upper secondary
+  - 4: Post secondary
+  - 5: Tertiary
+  
+- **dew**. Age when achieved highest education status
+
+- **dey**. Number of years spent in education
+
+- **dgn**. Sex. 0: Female, 1: Male
+
+- **dms**. Marital status:
+
+  - 1: single
+  - 2: married
+  - 3: separated
+  - 4: divorced
+  - 5: widowed
+  
+- **drgn1** Region at NUTS level 1
+
+  - 1: North East
+  - 2: North West
+  - 4: Yorkshire and the Humber
+  - 5: East Midlands 
+  - 6: West Midlands 
+  - 7: East of England
+  - 8: London
+  - 9: South East
+  - 10: South West
+  - 11: Wales
+  - 12: Scotland 
+  - 13: Northern Ireland
+
+## Labour market variables
+
+## Income variables
+
+## Benefit variables
+
+## Assets variables
+
+## Expenditures variables
+
 ## Health condition variables
 
 - **hcond1**. Numeric binary variable. = 0 if no difficult, 1 otherwise. *Difficulty with vision*  
