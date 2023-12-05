@@ -1,0 +1,45 @@
+---
+title: "FRS Variable Codebook"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FRS Variable Codebook}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo = FALSE}
+library(frsclean)
+```
+
+## List of Variables
+
+This document details the cleaned variables derived from the Family Resources Survey (FRS) data using `frsclean` package.
+
+## Health condition variables
+
+- **hcond1**. Numeric binary variable. = 0 if no difficult, 1 otherwise. *Difficulty with vision*  
+
+- **hcond2**. Numeric binary variable. = 0 if no difficult, 1 otherwise. *Difficulty with hearing*  
+
+- **hcond3**. Numeric binary variable. = 0 if no difficult, 1 otherwise. *Difficulty with mobility*  
+
+- **hcond4**. Numeric binary variable. = 0 if no difficult, 1 otherwise. *Difficulty with dexterity*  
+
+- **hcond5**. Numeric binary variable. = 0 if no difficult, 1 otherwise. *Difficulty with learning*  
+
+- **hcond6**. Numeric binary variable. = 0 if no difficult, 1 otherwise. *Difficulty with memory*  
+
+- **hcond7**. Numeric binary variable. = 0 if no difficult, 1 otherwise. *Difficulty with mental health*  
+
+- **hcond8**. Numeric binary variable. = 0 if no difficult, 1 otherwise. *Difficulty with stamina/breathing/fatigue*  
+
+- **hcond9**. Numeric binary variable. = 0 if no difficult, 1 otherwise. *Difficulty with socially or behaviourally*  
+
+- **hcond10**. Numeric binary variable. = 0 if no difficult, 1 otherwise. *Difficulty with other area of life*  

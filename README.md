@@ -7,14 +7,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Family Resources Survey Data Cleaning <img src="hex-frsclean.png" align="right" style="padding-left:10px;background-color:white;" width="100" height="100" />
+# Family Resources Survey Data Cleaning <img src="hex-frsclean.png" align="right" style="padding-left:10px;background-color:white;" width="100" height="100"/>
 
 <!-- badges: start -->
 
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+public.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![](https://img.shields.io/badge/doi-10.17605/OSF.IO/GNSEJ-green.svg)](https://doi.org/10.17605/OSF.IO/GNSEJ)
+
 <!-- badges: end -->
 
 ## Citation
@@ -29,6 +30,12 @@ The motivation for `frsclean` is to develop a set of standard functions
 for processing raw data from the Family Resources Survey (FRS), which is
 a survey of households representative of the UK population primarily
 collecting detailed information on income, taxes, and benefits.
+
+The code in this package is adapted from stata code used to clean the
+FRS data to provide inputs to the
+[UKMOD](https://www.microsimulation.ac.uk/ukmod/) tax/benefit
+micro-simulation model (Richiardi 2021). Variable names are consistent
+with those used in the UKMOD input data.
 
 ## Usage
 
@@ -93,3 +100,17 @@ devtools::install_git(
   build_vignettes = TRUE
 )
 ```
+
+## References
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-ukmod-2021" class="csl-entry">
+
+Richiardi, D. Popova, M. Collado. 2021. “UKMOD a New Tax-Benefit Model
+for the Four Nations of the UK.” *International Journal of
+Microsimulation* 14 (1): 92–101. <https://doi.org/10.34196/ijm.00231>.
+
+</div>
+
+</div>
