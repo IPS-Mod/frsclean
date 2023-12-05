@@ -11,7 +11,9 @@ frsclean(
   years = 2020,
   ages = NULL,
   keep_vars = NULL,
-  complete_vars = NULL
+  complete_vars = NULL,
+  inflate = TRUE,
+  index = "cpih"
 )
 }
 \arguments{
@@ -27,6 +29,10 @@ frsclean(
 
 \item{complete_vars}{Character vector - the names of the variables on which the selection of complete cases will be based.
 If NULL (default) no complete-case filtering is applied.}
+
+\item{inflate}{Logical - TRUE if adjusting monetary values to real-terms, FALSE otherwise.}
+
+\item{index}{Character - inflation index to use for real terms adjustment, "cpih" (default) or "rpi"}
 }
 \value{
 Returns a new set of variables

@@ -12,6 +12,9 @@
 #' @param keep_vars Character vector - the names of the variables to keep (defaults to NULL - retaining all variables).
 #' @param complete_vars Character vector - the names of the variables on which the selection of complete cases will be based.
 #' If NULL (default) no complete-case filtering is applied.
+#' @param inflate Logical - TRUE if adjusting monetary values to real-terms, FALSE otherwise.
+#' @param index Character - inflation index to use for real terms adjustment, "cpih" (default) or "rpi"
+#'
 #' @return Returns a new set of variables
 #' @export
 
@@ -20,7 +23,9 @@ frsclean <- function(root = "X:/",
                      years = 2020,
                      ages = NULL,
                      keep_vars = NULL,
-                     complete_vars = NULL){
+                     complete_vars = NULL,
+                     inflate = TRUE,
+                     index = "cpih"){
 
   cat(crayon::green("\n\nCleaning the Family Resources Survey Data\n\n"))
 
@@ -37,7 +42,13 @@ frsclean <- function(root = "X:/",
   if (2020 %in% years){
 
     data <- read_frs_2020_21(root = root, file = file)
-    wave <- frs_clean_global(data, ages = ages, keep_vars = keep_vars, complete_vars = complete_vars, year = 2020)
+    wave <- frs_clean_global(data,
+                             ages = ages,
+                             keep_vars = keep_vars,
+                             complete_vars = complete_vars,
+                             year = 2020,
+                             inflate = inflate,
+                             index = index)
 
     wave[, year := 2020]
     wave[, fiscal_year := "2020/2021"]
@@ -50,7 +61,13 @@ frsclean <- function(root = "X:/",
   if (2021 %in% years){
 
     data <- read_frs_2021_22(root = root, file = file)
-    wave <- frs_clean_global(data, ages = ages, keep_vars = keep_vars, complete_vars = complete_vars, year = 2021)
+    wave <- frs_clean_global(data,
+                             ages = ages,
+                             keep_vars = keep_vars,
+                             complete_vars = complete_vars,
+                             year = 2021,
+                             inflate = inflate,
+                             index = index)
 
     wave[, year := 2021]
     wave[, fiscal_year := "2021/2022"]

@@ -4,7 +4,7 @@
 \alias{clean_labmarket}
 \title{Clean Labour Market data}
 \usage{
-clean_labmarket(data, job_data, income_data)
+clean_labmarket(data, job_data, income_data, year)
 }
 \arguments{
 \item{data}{Data table. The combined adult, child, and household raw FRS data files.}
@@ -12,6 +12,8 @@ clean_labmarket(data, job_data, income_data)
 \item{job_data}{Data table. The raw FRS job file.}
 
 \item{income_data}{Data table. The income data cleaned by the `clean_income` function.}
+
+\item{year}{Numeric integer - year corresponding to the start of the financial year i.e. 2020/21 data is indexed as 2020}
 }
 \value{
 Data table

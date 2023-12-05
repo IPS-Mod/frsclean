@@ -9,13 +9,17 @@
 #' @param complete_vars Character vector - the names of the variables on which the selection of complete cases will be based.
 #' If NULL (default) no complete-case filtering is applied.
 #' @param year Numeric integer - year corresponding to the start of the financial year i.e. 2020/21 data is indexed as 2020
+#' @param inflate Logical - TRUE if adjusting monetary values to real-terms, FALSE otherwise.
+#' @param index Character - inflation index to use for real terms adjustment, "cpih" (default) or "rpi"
 #' @return Returns a new set of variables
 #' @export
 frs_clean_global <- function(data_list,
                              ages = NULL,
                              keep_vars = NULL,
                              complete_vars = NULL,
-                             year = NULL
+                             year = NULL,
+                             inflate = TRUE,
+                             index = "cpih"
 ) {
   #################################################
   ## RUN THE CLEANING MODULES AND COMBINE DATA ####
@@ -91,8 +95,17 @@ frs_clean_global <- function(data_list,
 
   cat(crayon::green("\t\ndone\n\n"))
 
-  ##################################################
-  ## COMBINE DATASETS ##############################
+  #############################################
+  ## Adjust monetary variables for inflation ##
+
+  if (inflate == TRUE){
+
+  final_data <- frsclean::Inflation_Adjust(data = final_data,
+                                           index = index,
+                                           year = year)
+  }
+  ##########################
+  ## Combine the datasets ##
 
   final_data <- frsclean::select_data(data = final_data,
                                       ages = ages,

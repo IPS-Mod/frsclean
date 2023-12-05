@@ -8,7 +8,10 @@ frs_clean_global(
   data_list,
   ages = NULL,
   keep_vars = NULL,
-  complete_vars = NULL
+  complete_vars = NULL,
+  year = NULL,
+  inflate = TRUE,
+  index = "cpih"
 )
 }
 \arguments{
@@ -20,6 +23,12 @@ frs_clean_global(
 
 \item{complete_vars}{Character vector - the names of the variables on which the selection of complete cases will be based.
 If NULL (default) no complete-case filtering is applied.}
+
+\item{year}{Numeric integer - year corresponding to the start of the financial year i.e. 2020/21 data is indexed as 2020}
+
+\item{inflate}{Logical - TRUE if adjusting monetary values to real-terms, FALSE otherwise.}
+
+\item{index}{Character - inflation index to use for real terms adjustment, "cpih" (default) or "rpi"}
 }
 \value{
 Returns a new set of variables
