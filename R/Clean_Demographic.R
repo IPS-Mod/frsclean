@@ -171,7 +171,15 @@ clean_demographic <- function(data,
   setnames(clean_data, c("gross4"), c("dwt"))
 
   #### interview data
-  setnames(clean_data, c("intdate"), c("ddt"))
+  clean_data[, ddt := intdate]
+  clean_data[substr(intdate,2,2) == "/" , ddt := paste0("0",intdate)] ## add leading zero to single digit months
+
+
+  clean_data[, month := substr(ddt,1,2)]
+  clean_data[, year := stringr::str_sub(ddt,-4)]
+  clean_data[, day := 15]
+
+  clean_data[, ddt := as.numeric(paste0(year,month,day))]
 
 
   ######################

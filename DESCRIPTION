@@ -21,4 +21,5 @@ Depends:
 Imports:
     data.table,
     here,
-    zoo
+    zoo,
+    stringr
