@@ -39,6 +39,26 @@ frsclean <- function(root = "X:/",
 
   data_list <- list()
 
+  ### 2018/2019 tax year (April 2018 - March 2019)
+
+  if (2018 %in% years){
+
+    data <- read_frs_2018_19(root = root, file = file)
+    wave <- frs_clean_global(data,
+                             ages = ages,
+                             keep_vars = keep_vars,
+                             complete_vars = complete_vars,
+                             year = 2018,
+                             inflate = inflate,
+                             price_year = price_year,
+                             index = index)
+
+    wave[, year := 2018]
+    wave[, fiscal_year := "2018/2019"]
+
+    data_list <- append(data_list, list(wave)) ; rm(wave)
+  }
+
   ### 2019/2020 tax year (April 2019 - March 2020)
 
   if (2019 %in% years){
