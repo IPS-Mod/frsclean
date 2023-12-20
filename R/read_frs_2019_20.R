@@ -1,6 +1,6 @@
-#' Read Family Resources Survey 2020/2021
+#' Read Family Resources Survey 2019/2020
 #'
-#' Read in the Family Resources Survey data for the 2020-21 fiscal year
+#' Read in the Family Resources Survey data for the 2019-20 fiscal year.
 #'
 #' @param root Character. The root directory
 #' @param file Character. The file path and name
@@ -15,10 +15,10 @@
 #'
 #'
 #' }
-read_frs_2020_21 <- function(root = "X:/",
+read_frs_2019_20 <- function(root = "X:/",
                              file = "HAR_PR/PR/IPS_beyond_SMI_NIHR202996/General/R/data-family-resources-survey/data/raw") {
 
-  cat(crayon::yellow("\tReading Family Resources Survey 2020/2021:\n\n"))
+  cat(crayon::yellow("\tReading Family Resources Survey 2019/2020:\n\n"))
 
   ###################################
   ####### Read in the data ##########
@@ -29,13 +29,13 @@ read_frs_2020_21 <- function(root = "X:/",
   cat(crayon::green("\tMain\n"))
 
   main <- data.table::fread(
-    paste0(root, file, "/2020/frs2021.tab"), showProgress = FALSE,
+    paste0(root, file, "/2019/frs1920.tab"), showProgress = FALSE,
     na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
   )
   data.table::setnames(main, names(main), tolower(names(main)))
 
   main[, intmonth := mnthcode]
-  main[, intyear := ifelse(mnthcode %in% 4:12, 2020, 2021)]
+  main[, intyear := ifelse(mnthcode %in% 4:12, 2019, 2020)]
 
   main_vars <- Hmisc::Cs(sernum, benunit, intdate, intmonth, intyear,
                          subrent, tentyp2,
@@ -49,7 +49,7 @@ read_frs_2020_21 <- function(root = "X:/",
   cat(crayon::green("\tAdult\n"))
 
   adult <- data.table::fread(
-    paste0(root, file, "/2020/adult.tab"), showProgress = FALSE,
+    paste0(root, file, "/2019/adult.tab"), showProgress = FALSE,
     na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
   )
   data.table::setnames(adult, names(adult), tolower(names(adult)))
@@ -75,7 +75,7 @@ read_frs_2020_21 <- function(root = "X:/",
   cat(crayon::green("\tChild\n"))
 
   child <- data.table::fread(
-    paste0(root, file, "/2020/child.tab"), showProgress = FALSE,
+    paste0(root, file, "/2019/child.tab"), showProgress = FALSE,
     na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
   )
   data.table::setnames(child, names(child), tolower(names(child)))
@@ -99,7 +99,7 @@ read_frs_2020_21 <- function(root = "X:/",
   cat(crayon::green("\tHousehold\n"))
 
   hhold <- data.table::fread(
-    paste0(root, file, "/2020/househol.tab"), showProgress = FALSE,
+    paste0(root, file, "/2019/househol.tab"), showProgress = FALSE,
     na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
   )
   data.table::setnames(hhold, names(hhold), tolower(names(hhold)))
@@ -124,7 +124,7 @@ read_frs_2020_21 <- function(root = "X:/",
   cat(crayon::green("\tBenefit unit\n"))
 
   benunit_data <- data.table::fread(
-    paste0(root, file, "/2020/benunit.tab"), showProgress = FALSE,
+    paste0(root, file, "/2019/benunit.tab"), showProgress = FALSE,
     na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
   )
   data.table::setnames(benunit_data, names(benunit_data), tolower(names(benunit_data)))
@@ -141,7 +141,7 @@ read_frs_2020_21 <- function(root = "X:/",
   cat(crayon::green("\tPension\n"))
 
   pension_data <- data.table::fread(
-    paste0(root, file, "/2020/pension.tab"), showProgress = FALSE,
+    paste0(root, file, "/2019/pension.tab"), showProgress = FALSE,
     na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
   )
   data.table::setnames(pension_data, names(pension_data), tolower(names(pension_data)))
@@ -158,7 +158,7 @@ read_frs_2020_21 <- function(root = "X:/",
   cat(crayon::green("\tPension provision\n"))
 
   penprov_data <- data.table::fread(
-    paste0(root, file, "/2020/penprov.tab"), showProgress = FALSE,
+    paste0(root, file, "/2019/penprov.tab"), showProgress = FALSE,
     na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
   )
   data.table::setnames(penprov_data, names(penprov_data), tolower(names(penprov_data)))
@@ -175,7 +175,7 @@ read_frs_2020_21 <- function(root = "X:/",
   cat(crayon::green("\tMaintenance\n"))
 
   maint_data <- data.table::fread(
-    paste0(root, file, "/2020/maint.tab"), showProgress = FALSE,
+    paste0(root, file, "/2019/maint.tab"), showProgress = FALSE,
     na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
   )
   data.table::setnames(maint_data, names(maint_data), tolower(names(maint_data)))
@@ -191,7 +191,7 @@ read_frs_2020_21 <- function(root = "X:/",
   cat(crayon::green("\tJob\n"))
 
   job_data <- data.table::fread(
-    paste0(root, file, "/2020/job.tab"), showProgress = FALSE,
+    paste0(root, file, "/2019/job.tab"), showProgress = FALSE,
     na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
   )
   data.table::setnames(job_data, names(job_data), tolower(names(job_data)))
@@ -210,7 +210,7 @@ read_frs_2020_21 <- function(root = "X:/",
   cat(crayon::green("\tOdd-job\n"))
 
   oddjob_data <- data.table::fread(
-    paste0(root, file, "/2020/oddjob.tab"), showProgress = FALSE,
+    paste0(root, file, "/2019/oddjob.tab"), showProgress = FALSE,
     na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
   )
   data.table::setnames(oddjob_data, names(oddjob_data), tolower(names(oddjob_data)))
@@ -227,7 +227,7 @@ read_frs_2020_21 <- function(root = "X:/",
   cat(crayon::green("\tAccounts\n"))
 
   accounts_data <- data.table::fread(
-    paste0(root, file, "/2020/accounts.tab"), showProgress = FALSE,
+    paste0(root, file, "/2019/accounts.tab"), showProgress = FALSE,
     na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
   )
   data.table::setnames(accounts_data, names(accounts_data), tolower(names(accounts_data)))
@@ -244,7 +244,7 @@ read_frs_2020_21 <- function(root = "X:/",
   cat(crayon::green("\tBenefits\n"))
 
   benefits_data <- data.table::fread(
-    paste0(root, file, "/2020/benefits.tab"), showProgress = FALSE,
+    paste0(root, file, "/2019/benefits.tab"), showProgress = FALSE,
     na.strings = c("NA", "", "-1", "-2", "-6", "-7", "-8", "-9", "-90", "-90.0", "N/A")
   )
   data.table::setnames(benefits_data, names(benefits_data), tolower(names(benefits_data)))
@@ -268,5 +268,5 @@ read_frs_2020_21 <- function(root = "X:/",
               oddjob_data = oddjob_data,
               accounts_data = accounts_data,
               benefits_data = benefits_data
-              ))
+  ))
 }

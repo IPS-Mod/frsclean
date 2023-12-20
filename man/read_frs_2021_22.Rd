@@ -19,8 +19,7 @@ read_frs_2021_22(
 Data table
 }
 \description{
-Read in the Family Resources Survey data for the 2021-22 fiscal year, including the
-two years prior if there is a need for a larger sample size
+Read in the Family Resources Survey data for the 2021-22 fiscal year
 }
 \examples{
 

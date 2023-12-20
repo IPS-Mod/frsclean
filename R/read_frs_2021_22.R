@@ -1,7 +1,6 @@
 #' Read Family Resources Survey 2021/2022
 #'
-#' Read in the Family Resources Survey data for the 2021-22 fiscal year, including the
-#' two years prior if there is a need for a larger sample size
+#' Read in the Family Resources Survey data for the 2021-22 fiscal year
 #'
 #' @param root Character. The root directory
 #' @param file Character. The file path and name
@@ -35,7 +34,10 @@ read_frs_2021_22 <- function(root = "X:/",
   )
   data.table::setnames(main, names(main), tolower(names(main)))
 
-  main_vars <- Hmisc::Cs(sernum, benunit, intdate,
+  main[, intmonth := mnthcode]
+  main[, intyear := ifelse(mnthcode %in% 4:12, 2021, 2022)]
+
+  main_vars <- Hmisc::Cs(sernum, benunit, intdate, intmonth, intyear,
                          subrent, tentyp2,
                          ptentyp2, tenure, landlord, accjob, hbenamt)
 
@@ -102,6 +104,9 @@ read_frs_2021_22 <- function(root = "X:/",
   )
   data.table::setnames(hhold, names(hhold), tolower(names(hhold)))
 
+  data.table::setnames(hhold, "bedroom", "bedroom6")
+
+
   hhold_vars <- Hmisc::Cs(sernum, gross4, gvtregno, bedroom6, ptentyp2,
                           hhrent, tenure, tentyp2, subrent, mortint,
                           cwatamtd, csewamt, watsewrt,
@@ -110,6 +115,10 @@ read_frs_2021_22 <- function(root = "X:/",
                           chrgamt6, chrgamt7, chrgamt8, chrgamt9)
 
   hhold <- hhold[ , hhold_vars, with=F]
+
+  ## no of bedrooms data variable is empty in this year - set all equal to 0
+  hhold[,bedroom6 := as.numeric(bedroom6)]
+  hhold[is.na(bedroom6), bedroom6 := 0]
 
   data <- merge(data, hhold, by = c("sernum"))
 
@@ -197,7 +206,8 @@ read_frs_2021_22 <- function(root = "X:/",
 
   job_vars <- Hmisc::Cs(sernum, benunit, person,
                         sejblong, sejbmths, jobtype, emplany, numemp,
-                        totus1, everot, usuhr, pothr)
+                        totus1, everot, usuhr, pothr,
+                        workyr, workmth, wrkprev)
 
   job_data <- job_data[ , job_vars, with=F]
 

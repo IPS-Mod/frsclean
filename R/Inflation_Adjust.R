@@ -4,6 +4,7 @@
 #'
 #' @param data Data table - the FRS dataset.
 #' @param year Numeric integer - year corresponding to the start of the financial year i.e. 2020/21 data is indexed as 2020
+#' @param price_year Numeric integer - year to use as the base year for inflation adjustment (default = 2022).
 #' @param index Character - inflation index to use for real terms adjustment, "cpih" (default) or "rpi"
 #'
 #' @return Data table
@@ -17,6 +18,7 @@
 #' }
 Inflation_Adjust <- function(data,
                              year = NULL,
+                             price_year = 2022,
                              index = "cpih"){
 
   if (index == "cpih"){
@@ -27,9 +29,14 @@ Inflation_Adjust <- function(data,
     inflation <- frsclean::inflation[measure == "rpi",]
   }
 
+  ## rebase to the price year being used
+  base <- as.numeric(inflation[year == price_year, "index"])
+
+  inflation[, index_rebased := (base/index) * 100]
+
   y <- data.table::copy(year)
 
-  inf_index <- (100/as.numeric(inflation[year == y, "index"]))
+  inf_index <- (as.numeric(inflation[year == y, "index_rebased"])/100)
 
   ### Adjust all monetary variables by inf_index to get into the base year terms
 

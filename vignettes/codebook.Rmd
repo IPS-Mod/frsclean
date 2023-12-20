@@ -85,7 +85,7 @@ This document details the cleaned variables derived from the Family Resources Su
   - 4: divorced
   - 5: widowed
   
-- **drgn1** Region at NUTS level 1
+- **drgn1** Region at NUTS level 1:
 
   - 1: North East
   - 2: North West
@@ -102,6 +102,20 @@ This document details the cleaned variables derived from the Family Resources Su
 
 ## Labour market variables
 
+
+Variables not in the UKMOD datasets but included additionally:
+
+- **lwrkyr** Year started present job.
+
+- **lwrkmth** Month started present job.
+
+- **ldayswrk** Number of days worked in present job.
+
+- **lprev** What doing immediately before current job.
+
+  - 1: Employed/self-employed
+  - 2: Not in paid employment
+
 ## Income variables
 
 ## Benefit variables
@@ -111,6 +125,8 @@ This document details the cleaned variables derived from the Family Resources Su
 ## Expenditures variables
 
 ## Health condition variables
+
+Variables not in the UKMOD datasets but included additionally:
 
 - **hcond1**. Numeric binary variable. = 0 if no difficult, 1 otherwise. *Difficulty with vision*  
 

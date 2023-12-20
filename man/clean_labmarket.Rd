@@ -4,10 +4,12 @@
 \alias{clean_labmarket}
 \title{Clean Labour Market data}
 \usage{
-clean_labmarket(data, job_data, income_data, year)
+clean_labmarket(data, main_data, job_data, income_data, year)
 }
 \arguments{
 \item{data}{Data table. The combined adult, child, and household raw FRS data files.}
+
+\item{main_data}{Data table. The main data file "frsxxyy"}
 
 \item{job_data}{Data table. The raw FRS job file.}
 

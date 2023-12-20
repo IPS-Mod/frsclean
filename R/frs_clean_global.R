@@ -10,6 +10,7 @@
 #' If NULL (default) no complete-case filtering is applied.
 #' @param year Numeric integer - year corresponding to the start of the financial year i.e. 2020/21 data is indexed as 2020
 #' @param inflate Logical - TRUE if adjusting monetary values to real-terms, FALSE otherwise.
+#' @param price_year Numeric integer - year to use as the base year for inflation adjustment (default = 2022).
 #' @param index Character - inflation index to use for real terms adjustment, "cpih" (default) or "rpi"
 #' @return Returns a new set of variables
 #' @export
@@ -19,6 +20,7 @@ frs_clean_global <- function(data_list,
                              complete_vars = NULL,
                              year = NULL,
                              inflate = TRUE,
+                             price_year = 2022,
                              index = "cpih"
 ) {
   #################################################
@@ -63,6 +65,7 @@ frs_clean_global <- function(data_list,
   cat(crayon::yellow("\n\tCleaning Labour Market Variables\n"))
 
   labour_market <- frsclean::clean_labmarket(data = data_list$data,
+                                             main_data = data_list$main_data,
                                              job_data = data_list$job_data,
                                              income_data = income_data,
                                              year = year)
@@ -101,6 +104,7 @@ frs_clean_global <- function(data_list,
   if (inflate == TRUE){
 
   final_data <- frsclean::Inflation_Adjust(data = final_data,
+                                           price_year = price_year,
                                            index = index,
                                            year = year)
   }

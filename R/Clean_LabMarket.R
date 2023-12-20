@@ -7,6 +7,7 @@
 #' same input data
 #'
 #' @param data Data table. The combined adult, child, and household raw FRS data files.
+#' @param main_data  Data table. The main data file "frsxxyy"
 #' @param job_data Data table. The raw FRS job file.
 #' @param income_data Data table. The income data cleaned by the `clean_income` function.
 #' @param year Numeric integer - year corresponding to the start of the financial year i.e. 2020/21 data is indexed as 2020
@@ -21,13 +22,17 @@
 #'
 #' }
 clean_labmarket <- function(data,
+                            main_data,
                             job_data,
                             income_data,
                             year){
 
+  clean_main_data <- copy(main_data[, c("sernum","benunit","intmonth","intyear")])
   clean_data <- copy(data)
   clean_job_data <- copy(job_data)
   lab_income <- copy(income_data[, c("sernum", "benunit", "person", "yem", "yse")])
+
+  job_duration_data <- merge(clean_job_data[jobtype == 1,], clean_main_data, by = c("sernum","benunit"), all.x = TRUE)
 
   ######################
   #### Clean variables
@@ -156,6 +161,27 @@ clean_labmarket <- function(data,
   clean_data[sic >= 97 & sic <= 98, lindi := 20]
   clean_data[sic >= 99 & !is.na(sic), lindi := 21]
 
+  #### Job duration data
+
+  job_duration_data[, lwrkyr := workyr]
+  job_duration_data[, lwrkmth := workmth]
+  job_duration_data[, lprev := ifelse(wrkprev %in% 1:2, 1, 2)]
+
+  suppressWarnings(
+  job_duration_data[, strtwrk := my(paste0(lwrkmth,"-",lwrkyr))]
+  )
+  suppressWarnings(
+  job_duration_data[, intdate := my(paste0(intmonth,"-",intyear))]
+  )
+
+  job_duration_data[, ldayswrk := as.numeric(intdate - strtwrk)]
+  job_duration_data[ldayswrk < 0, ldayswrk := NA]
+
+
+  job_duration_data <- job_duration_data[, c("sernum", "benunit", "person",
+                                             "lwrkyr", "lwrkmth", "ldayswrk", "lprev")]
+
+  clean_data <- merge(clean_data, job_duration_data, by = c("sernum", "benunit", "person"), all.x = TRUE)
 
   ######################
   #### Retain variables
@@ -163,7 +189,8 @@ clean_labmarket <- function(data,
   clean_data <- clean_data[, c("sernum", "benunit", "person",
                                "les", "lcs", "lfs",
                                "liwwh", "loc", "lowas",
-                               "lhw", "lhw00", "lhw01", "lindi")]
+                               "lhw", "lhw00", "lhw01", "lindi",
+                               "lwrkyr", "lwrkmth", "ldayswrk", "lprev")]
 
 
   return(clean_data)

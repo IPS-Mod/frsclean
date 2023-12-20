@@ -4,12 +4,14 @@
 \alias{Inflation_Adjust}
 \title{Inflation Adjustment}
 \usage{
-Inflation_Adjust(data, year = NULL, index = "cpih")
+Inflation_Adjust(data, year = NULL, price_year = 2022, index = "cpih")
 }
 \arguments{
 \item{data}{Data table - the FRS dataset.}
 
 \item{year}{Numeric integer - year corresponding to the start of the financial year i.e. 2020/21 data is indexed as 2020}
+
+\item{price_year}{Numeric integer - year to use as the base year for inflation adjustment (default = 2022).}
 
 \item{index}{Character - inflation index to use for real terms adjustment, "cpih" (default) or "rpi"}
 }

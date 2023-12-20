@@ -13,6 +13,7 @@
 #' @param complete_vars Character vector - the names of the variables on which the selection of complete cases will be based.
 #' If NULL (default) no complete-case filtering is applied.
 #' @param inflate Logical - TRUE if adjusting monetary values to real-terms, FALSE otherwise.
+#' @param price_year Numeric integer - year to use as the base year for inflation adjustment (default = 2022).
 #' @param index Character - inflation index to use for real terms adjustment, "cpih" (default) or "rpi"
 #'
 #' @return Returns a new set of variables
@@ -25,6 +26,7 @@ frsclean <- function(root = "X:/",
                      keep_vars = NULL,
                      complete_vars = NULL,
                      inflate = TRUE,
+                     price_year = 2022,
                      index = "cpih"){
 
   cat(crayon::green("\n\nCleaning the Family Resources Survey Data\n\n"))
@@ -37,6 +39,26 @@ frsclean <- function(root = "X:/",
 
   data_list <- list()
 
+  ### 2019/2020 tax year (April 2019 - March 2020)
+
+  if (2019 %in% years){
+
+    data <- read_frs_2019_20(root = root, file = file)
+    wave <- frs_clean_global(data,
+                             ages = ages,
+                             keep_vars = keep_vars,
+                             complete_vars = complete_vars,
+                             year = 2019,
+                             inflate = inflate,
+                             price_year = price_year,
+                             index = index)
+
+    wave[, year := 2019]
+    wave[, fiscal_year := "2019/2020"]
+
+    data_list <- append(data_list, list(wave)) ; rm(wave)
+  }
+
   ### 2020/2021 tax year (April 2020 - March 2021)
 
   if (2020 %in% years){
@@ -48,6 +70,7 @@ frsclean <- function(root = "X:/",
                              complete_vars = complete_vars,
                              year = 2020,
                              inflate = inflate,
+                             price_year = price_year,
                              index = index)
 
     wave[, year := 2020]
@@ -67,6 +90,7 @@ frsclean <- function(root = "X:/",
                              complete_vars = complete_vars,
                              year = 2021,
                              inflate = inflate,
+                             price_year = price_year,
                              index = index)
 
     wave[, year := 2021]
@@ -81,6 +105,12 @@ frsclean <- function(root = "X:/",
 
   data <- data.table::rbindlist(data_list, use.names = T, fill = T)
 
+  ## UKMOD requires data sorting by household
+  if (length(years) > 1){
+  data <- data %>%
+    mutate(idhh = idhh*100000 + year) %>%
+    arrange(idhh)
+  }
   #######################
   ## Record time taken
 

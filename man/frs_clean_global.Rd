@@ -11,6 +11,7 @@ frs_clean_global(
   complete_vars = NULL,
   year = NULL,
   inflate = TRUE,
+  price_year = 2022,
   index = "cpih"
 )
 }
@@ -27,6 +28,8 @@ If NULL (default) no complete-case filtering is applied.}
 \item{year}{Numeric integer - year corresponding to the start of the financial year i.e. 2020/21 data is indexed as 2020}
 
 \item{inflate}{Logical - TRUE if adjusting monetary values to real-terms, FALSE otherwise.}
+
+\item{price_year}{Numeric integer - year to use as the base year for inflation adjustment (default = 2022).}
 
 \item{index}{Character - inflation index to use for real terms adjustment, "cpih" (default) or "rpi"}
 }
