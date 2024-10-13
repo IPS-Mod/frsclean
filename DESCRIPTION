@@ -22,4 +22,6 @@ Imports:
     data.table,
     here,
     zoo,
+    dplyr,
+    tidyr.
     stringr
