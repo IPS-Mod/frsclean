@@ -23,5 +23,5 @@ Imports:
     here,
     zoo,
     dplyr,
-    tidyr.
+    tidyr,
     stringr
