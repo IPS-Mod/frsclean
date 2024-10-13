@@ -61,7 +61,7 @@ read_frs_2020_21 <- function(root = "X:/",
                           mntamt1, mntamt2, mntusam1, mntusam2, mntus1, mntus2, apamt, apdamt, pareamt,
                           r01, r02, r03, r04, r05, r06, r07, r08, r09, r10, r11, r12, r13, r14,
                           disd01, disd02, disd03, disd04, disd05, disd06, disd07, disd08, disd09, disd10,
-                          inearns, seincam2)
+                          inearns, seincam2, redamt, redany)
 
   adult <- adult[ , adult_vars, with=F]
 

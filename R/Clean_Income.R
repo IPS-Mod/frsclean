@@ -179,6 +179,12 @@ clean_income <- function(data,
   clean_data[chamttst > 0 & !(is.na(chamttst)), yot01 := yot01 + (chamttst*52/12)]
 
   ###########################
+  ## Lump sum income
+  clean_data[, yls := 0]
+  clean_data[redany == 1, yls := yls + redamt]
+  clean_data[, yls := yls/12]
+
+  ###########################
   ## Disposable income
   clean_data[is.na(nindinc) | nindinc %in% -9:-1, nindinc := 0]
   clean_data[adult == 1, yds := as.numeric(nindinc)]
