@@ -1,7 +1,7 @@
 Package: frsclean
 Type: Package
 Title: Data Wrangling for Family Resources Survey
-Version: 1.0.5
+Version: 1.0.6
 Author: person(given = "Damon",
            family = "Morris",
            role = c("aut", "cre"),
