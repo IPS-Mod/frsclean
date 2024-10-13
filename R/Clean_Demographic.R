@@ -158,6 +158,7 @@ clean_demographic <- function(data,
   clean_data[is.na(tea2), tea2 := tea ]
 
   clean_data[, dew := cohort + tea2]
+  clean_data[is.na(dew), dew := -1]
 
 
         ### number of years
