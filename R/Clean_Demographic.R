@@ -18,7 +18,7 @@
 clean_demographic <- function(data,
                               main_data){
 
-  clean_main_data <- copy(main_data[, c("sernum","benunit","intdate")])
+  clean_main_data <- copy(main_data[, c("sernum","benunit","intyear","intmonth")])
 
   clean_data <- copy(data)
 
@@ -150,7 +150,7 @@ clean_demographic <- function(data,
   clean_data[deh == 4, tea2 := ifelse(dag < 20, dag, 20)]
   clean_data[deh == 5, tea2 := ifelse(dag < 22, dag, 22)]
 
-  clean_data[, yearnow := as.numeric( stringr::str_sub(intdate, -4, -1) )]
+  clean_data[, yearnow := intyear]
 
   clean_data[, cohort := yearnow - dag]
 
@@ -172,12 +172,9 @@ clean_demographic <- function(data,
   setnames(clean_data, c("gross4"), c("dwt"))
 
   #### interview data
-  clean_data[, ddt := intdate]
-  clean_data[substr(intdate,2,2) == "/" , ddt := paste0("0",intdate)] ## add leading zero to single digit months
-
-
-  clean_data[, month := substr(ddt,1,2)]
-  clean_data[, year := stringr::str_sub(ddt,-4)]
+  clean_data[, month := as.character(intmonth)]
+  clean_data[stringr::str_length(month) == 1 , month := paste0("0",month)] ## add leading zero to single digit months
+  clean_data[, year := intyear]
   clean_data[, day := 15]
 
   clean_data[, ddt := as.numeric(paste0(year,month,day))]
@@ -195,5 +192,4 @@ clean_demographic <- function(data,
 
 
   return(clean_data)
-
 }
