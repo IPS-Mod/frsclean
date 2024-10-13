@@ -119,6 +119,26 @@ frsclean <- function(root = "X:/",
     data_list <- append(data_list, list(wave)) ; rm(wave)
   }
 
+  ### 2022/2023 tax year (April 2022 - March 2023)
+
+  if (2022 %in% years){
+
+    data <- read_frs_2022_23(root = root, file = file)
+    wave <- frs_clean_global(data,
+                             ages = ages,
+                             keep_vars = keep_vars,
+                             complete_vars = complete_vars,
+                             year = 2022,
+                             inflate = inflate,
+                             price_year = price_year,
+                             index = index)
+
+    wave[, year := 2022]
+    wave[, fiscal_year := "2022/2023"]
+
+    data_list <- append(data_list, list(wave)) ; rm(wave)
+  }
+
 
   #############################################################
   ### Combine all waves in the list into a single dataset
@@ -131,6 +151,16 @@ frsclean <- function(root = "X:/",
     mutate(idhh = idhh*100000 + year) %>%
     arrange(idhh)
   }
+  ###################################################################
+  ## Rescale the weights so they sum up to the price year population
+
+  pop_size <- sum(data$dwt)
+  scaled_pop_size <- sum(data[year == price_year]$dwt)
+
+  scaling_factor <- scaled_pop_size / pop_size
+
+  data <- mutate(data, dwt = dwt * scaling_factor)
+
   #######################
   ## Record time taken
 

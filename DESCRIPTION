@@ -1,7 +1,7 @@
 Package: frsclean
 Type: Package
 Title: Data Wrangling for Family Resources Survey
-Version: 1.0.4
+Version: 1.0.5
 Author: person(given = "Damon",
            family = "Morris",
            role = c("aut", "cre"),
@@ -15,7 +15,7 @@ Description: Reads in raw data from the Family Resources Survey (FRS)
 License: AGPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Depends: 
     R (>= 2.10)
 Imports:

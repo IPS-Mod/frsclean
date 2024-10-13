@@ -247,6 +247,10 @@ clean_benefits <- function(data,
   clean_data[is.na(bsauc), bdimbwa := 0]
   clean_data[is.na(bsauc), bdiscwa := 0]
 
+
+  clean_data[is.na(bdimbwa), bdimbwa := 0]
+  clean_data[is.na(bdiscwa), bdiscwa := 0]
+
   return(clean_data)
 
 }
