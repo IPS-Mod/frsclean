@@ -145,6 +145,8 @@ frsclean <- function(root = "X:/",
 
   data <- data.table::rbindlist(data_list, use.names = T, fill = T)
 
+  data[, dpd := price_year]
+
   ## UKMOD requires data sorting by household
   if (length(years) > 1){
   data <- data %>%
